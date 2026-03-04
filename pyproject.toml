@@ -1,0 +1,56 @@
+[project]
+name = "jwtaztoken"
+version = "0.1.0"
+description = "CLI tool to decode and inspect Azure OAuth / JWT tokens"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "cryptography>=46.0.5",
+    "httpx>=0.28.1",
+    "pyjwt>=2.11.0",
+    "rich>=14.3.3",
+    "typer>=0.24.1",
+]
+
+[project.scripts]
+jwtaztoken = "jwtaztoken.cli:app"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.4",
+    "ty>=0.0.20",
+]
+
+# -- Ruff -------------------------------------------------------------------
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["src"]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "N",    # pep8-naming
+    "UP",   # pyupgrade
+    "B",    # flake8-bugbear
+    "S",    # flake8-bandit
+    "A",    # flake8-builtins
+    "ANN",  # flake8-annotations
+    "T20",  # flake8-print (no stray prints)
+    "SIM",  # flake8-simplify
+    "RUF",  # Ruff-specific rules
+]
+ignore = [
+    "S603",    # subprocess call — checked, intentional
+    "T201",    # print — we use rich console instead (but some stderr prints remain)
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["jwtaztoken"]
+
+# -- ty (type checker) ------------------------------------------------------
+[tool.ty.environment]
+extra-paths = ["src"]
